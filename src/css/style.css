@@ -261,3 +261,17 @@ footer {
   font-size: var(--small-font);
   padding: 1em;
 }
+
+/* Alert styling */
+.alert-list {
+  margin-bottom: 1rem;
+}
+
+.alert-list p {
+  margin: 0;
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

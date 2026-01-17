@@ -1,5 +1,10 @@
 import ProductData from './ProductData.mjs';
 import ProductList from './ProductList.mjs';
+import Alert from './Alert.js';
+
+// Create and display alerts
+const alert = new Alert();
+alert.displayAlerts();
 
 // Create data source
 const dataSource = new ProductData('tents');
