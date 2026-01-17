@@ -1,17 +1,17 @@
 [
-  {
-    "message": "This is only a test",
-    "background": "darkblue",
-    "color": "white"
-  },
-  {
-    "message": "Welcome to Sleep Outside! Check out our winter sale!",
-    "background": "#28a745",
-    "color": "white"
-  },
-  {
-    "message": "Free shipping on orders over $50!",
-    "background": "#ffc107",
-    "color": "#212529"
-  }
+    {
+        "message": "This is only a test",
+        "background": "darkblue",
+        "color": "white"
+    },
+    {
+        "message": "Welcome to Sleep Outside! Check out our winter sale!",
+        "background": "#28a745",
+        "color": "white"
+    },
+    {
+        "message": "Free shipping on orders over $50!",
+        "background": "#ffc107",
+        "color": "#212529"
+    }
 ]
