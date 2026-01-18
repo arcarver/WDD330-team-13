@@ -23,5 +23,9 @@ export function setClick(selector, callback) {
 }
 
 export function renderListWithTemplate(templateFn, parentElement, list, position = "afterbegin", clear = false) {
-  
+  const stringHtml = list.map(templateFn);
+  if (clear) {
+    parentElement.innerHTML = "";
+  }  
+  parentElement.insertAdjacentHTML(position, stringHtml.join(""));
 }
