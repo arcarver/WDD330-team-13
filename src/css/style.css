@@ -256,7 +256,9 @@ button {
     grid-template-columns: 150px auto 15%;
   }
 }
-
+.cart-footer {
+ visibility: hidden;
+}
 footer {
   font-size: var(--small-font);
   padding: 1em;
