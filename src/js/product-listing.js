@@ -7,16 +7,18 @@ loadHeaderFooter();
 const category = getParam('category');
 
 // Update the page title based on category
-function updateTitle(category) {
-    const titleElement = document.querySelector('h2');
-    if (category) {
-        // Capitalize first letter and handle special cases
-        const categoryName = category === 'sleeping-bags' ? 'Sleeping Bags' :
-            category.charAt(0).toUpperCase() + category.slice(1);
-        titleElement.textContent = `Top Products: ${categoryName}`;
-    } else {
-        titleElement.textContent = 'Top Products';
-    }
+function updateTitle(categoryName) {
+  const titleElement = document.querySelector('h2');
+  if (categoryName) {
+    // Capitalize first letter and handle special cases
+    const formattedName =
+      categoryName === 'sleeping-bags'
+        ? 'Sleeping Bags'
+        : categoryName.charAt(0).toUpperCase() + categoryName.slice(1);
+    titleElement.textContent = `Top Products: ${formattedName}`;
+  } else {
+    titleElement.textContent = 'Top Products';
+  }
 }
 
 updateTitle(category);
