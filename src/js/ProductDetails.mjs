@@ -45,7 +45,7 @@ function productDetailsTemplate(product) {
     // Handle discount pricing
     const priceElement = document.getElementById('productPrice');
     const isDiscounted = product.SuggestedRetailPrice && product.FinalPrice < product.SuggestedRetailPrice;
-    
+
     if (isDiscounted) {
         const discountPercent = Math.round(((product.SuggestedRetailPrice - product.FinalPrice) / product.SuggestedRetailPrice) * 100);
         priceElement.innerHTML = `
