@@ -259,6 +259,34 @@ button {
   width: 100%;
 }
 
+.product-detail .price-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5em;
+  margin: 1em 0;
+  position: relative;
+}
+
+.product-detail .discount-badge {
+  background: #ff6b35;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 1em;
+  font-weight: bold;
+  align-self: flex-start;
+}
+
+.product-detail .product-card__price--original {
+  font-size: 1.1em;
+}
+
+.product-detail .product-card__price {
+  font-size: 1.3em;
+  margin: 0;
+}
+
 /* Start cart list card styles */
 .cart-card {
   display: grid;
