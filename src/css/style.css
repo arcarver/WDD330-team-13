@@ -257,7 +257,7 @@ button {
   }
 }
 .cart-footer {
- visibility: hidden;
+  visibility: hidden;
 }
 footer {
   font-size: var(--small-font);
