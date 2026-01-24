@@ -42,6 +42,15 @@ export default class ShoppingCart {
                 `<li class="divider">Your cart is empty.</li>`
             );
         }
+
+        // hides and unhides total:
+        else {
+            const unhide = document.getElementsByClassName('cart-footer')[0]
+            unhide.style.visibility = 'visible';
+            
+        }
+
+
     }
 
     init() {
