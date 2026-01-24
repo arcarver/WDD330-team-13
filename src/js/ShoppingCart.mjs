@@ -12,9 +12,11 @@ export default class ShoppingCart {
     }
 
     cartItemTemplate(item) {
+        // Handle both API response format and local JSON format
+        const imageUrl = item.Images?.PrimaryMedium || item.Image || '';
         return `<li class="cart-card divider">
       <a href="#" class="cart-card__image">
-        <img src="${item.Image}" alt="${item.Name}" />
+        <img src="${imageUrl}" alt="${item.Name}" />
       </a>
       <a href="#">
         <h2 class="card__name">${item.Name}</h2>
@@ -52,10 +54,10 @@ export default class ShoppingCart {
                 const value = parseFloat(currentValue.innerText.replace(/[^\d.]/g, '')) || 0;
                 return accumulator + value;
             }, 0);
-            
+
             document.getElementsByClassName('cart-total')[0].textContent = `This is the new total: $${total}`
         }
-        
+
 
 
     }

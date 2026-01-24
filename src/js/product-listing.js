@@ -1,8 +1,13 @@
 import ProductData from './ProductData.mjs';
 import ProductList from './ProductList.mjs';
-import { loadHeaderFooter, getParam } from './utils.mjs';
+import { loadHeaderFooter, getParam, updateCartCount } from './utils.mjs';
 
 loadHeaderFooter();
+
+// Update cart count after header loads
+setTimeout(() => {
+  updateCartCount();
+}, 100);
 
 const category = getParam('category');
 

@@ -58,4 +58,24 @@ export async function loadHeaderFooter() {
 
   if (headerElement) renderWithTemplate(headerTemplate, headerElement);
   if (footerElement) renderWithTemplate(footerTemplate, footerElement);
+
+  // Initialize cart count display
+  updateCartCount();
+}
+
+export function updateCartCount() {
+  const cartItems = getLocalStorage("so-cart") || [];
+  const cartCountElement = document.querySelector("#cart-count");
+
+  if (cartCountElement) {
+    const itemCount = cartItems.length;
+    cartCountElement.textContent = itemCount;
+
+    // Hide the count if cart is empty
+    if (itemCount === 0) {
+      cartCountElement.classList.add("hidden");
+    } else {
+      cartCountElement.classList.remove("hidden");
+    }
+  }
 }
