@@ -47,7 +47,8 @@ export default class ShoppingCart {
         else {
             const unhide = document.getElementsByClassName('cart-footer')[0]
             unhide.style.visibility = 'visible';
-            const total = document.getElementsByClassName('cart-total')[0].textContent="This is the new total"
+            const total = document.getElementsByClassName('card-cart_price')
+            document.getElementsByClassName('cart-total')[0].textContent = `This is the new total: ${total}`
             
         }
 
