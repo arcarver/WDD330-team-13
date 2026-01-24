@@ -47,10 +47,15 @@ export default class ShoppingCart {
         else {
             const unhide = document.getElementsByClassName('cart-footer')[0]
             unhide.style.visibility = 'visible';
-            const total = document.getElementsByClassName('card-cart_price')
-            document.getElementsByClassName('cart-total')[0].textContent = `This is the new total: ${total}`
+            const prices = document.getElementsByClassName('cart-card__price')
+            const total = Array.from(prices).reduce((accumulator, currentValue) => {
+                const value = parseFloat(currentValue.innerText.replace(/[^\d.]/g, '')) || 0;
+                return accumulator + value;
+            }, 0);
             
+            document.getElementsByClassName('cart-total')[0].textContent = `This is the new total: $${total}`
         }
+        
 
 
     }
