@@ -1,3 +1,275 @@
+/* Checkout form and order summary styling */
+
+.checkout-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  align-items: flex-start;
+  margin-top: 2.5rem;
+  justify-content: center;
+}
+
+#checkout-form {
+  flex: 2 1 340px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  padding: 1.2rem 1.2rem 1rem 1.2rem;
+  min-width: 260px;
+  max-width: 400px;
+  margin-bottom: 1.2rem;
+}
+
+#checkout-form fieldset {
+  border: none;
+  margin-bottom: 0.7rem;
+  padding: 0;
+}
+
+#checkout-form legend {
+  font-weight: bold;
+  margin-bottom: 0.3em;
+  font-size: 1.05em;
+  color: #444;
+}
+
+#checkout-form label {
+  display: block;
+  margin-top: 0.2em;
+  margin-bottom: 0.1em;
+  font-size: 0.98em;
+  color: #333;
+}
+
+#checkout-form input[type='text'],
+#checkout-form input[type='month'] {
+  width: 100%;
+  padding: 0.35em 0.5em;
+  margin-bottom: 0.4em;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  font-size: 0.98em;
+  background: #fafbfc;
+  transition: border 0.2s;
+  height: 2em;
+}
+
+#checkout-form input[type='text']:focus,
+#checkout-form input[type='month']:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  background: #fffbe7;
+}
+
+#checkout-form .button {
+  display: block;
+  width: 80%;
+  margin: 1.5em auto 0 auto;
+  background: var(--secondary-color);
+  color: #fff;
+  font-size: 1.25em;
+  padding: 0.9em 0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  letter-spacing: 0.03em;
+}
+
+#checkout-form .button:hover {
+  background: var(--tertiary-color);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+#form-error {
+  color: #d32f2f;
+  font-size: 1.05em;
+  margin-top: 0.7em;
+  margin-bottom: 0.5em;
+  text-align: left;
+}
+
+#checkout-form fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7em;
+}
+
+#checkout-form fieldset legend {
+  margin-bottom: 0.3em;
+}
+
+#checkout-form label {
+  margin-bottom: 0.1em;
+}
+
+#checkout-form input[type='text'],
+#checkout-form input[type='month'] {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+@media (max-width: 700px) {
+  .checkout-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;
+  }
+
+  #checkout-form,
+  .order-summary {
+    max-width: 100%;
+    min-width: 0;
+    margin: 0 auto 1.5rem auto;
+  }
+}
+
+.order-summary {
+  flex: 1 1 220px;
+  background: #f8f8f8;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  padding: 1.2rem 1.2rem 1rem 1.2rem;
+  min-width: 180px;
+  max-width: 260px;
+  margin-bottom: 1.2rem;
+  position: sticky;
+  top: 2.5rem;
+  align-self: flex-start;
+  z-index: 1;
+}
+
+.order-summary h3 {
+  font-size: 1.25em;
+  margin-bottom: 1em;
+  color: #333;
+}
+
+.order-summary ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.order-summary li {
+  font-size: 1.08em;
+  margin-bottom: 0.5em;
+  color: #222;
+}
+
+.order-summary li strong {
+  font-size: 1.13em;
+  color: #111;
+}
+
+#checkout-form {
+  flex: 2 1 400px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  padding: 1.5rem 1.5rem 1rem 1.5rem;
+  min-width: 340px;
+  max-width: 600px;
+}
+
+#checkout-form fieldset {
+  border: none;
+  margin-bottom: 1rem;
+  padding: 0;
+}
+
+#checkout-form legend {
+  font-weight: bold;
+  margin-bottom: 0.5em;
+  font-size: 1.1em;
+}
+
+#checkout-form label {
+  display: inline-block;
+  margin-top: 0.5em;
+  margin-bottom: 0.2em;
+  font-size: 1em;
+}
+
+#checkout-form input[type='text'],
+#checkout-form input[type='month'] {
+  width: 48%;
+  padding: 0.4em 0.6em;
+  margin-bottom: 0.5em;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+#checkout-form input[type='text']:focus,
+#checkout-form input[type='month']:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+#checkout-form .button {
+  display: block;
+  width: 60%;
+  margin: 1.2em auto 0 auto;
+  background: var(--secondary-color);
+  color: #fff;
+  font-size: 1.2em;
+  padding: 0.7em 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#checkout-form .button:hover {
+  background: var(--tertiary-color);
+}
+
+#form-error {
+  color: #d32f2f;
+  font-size: 1em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.order-summary {
+  flex: 1 1 220px;
+  background: #f8f8f8;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  padding: 1.2rem 1.5rem 1.2rem 1.5rem;
+  min-width: 220px;
+  max-width: 320px;
+}
+
+.order-summary h3 {
+  font-size: 1.2em;
+  margin-bottom: 0.7em;
+}
+
+.order-summary ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.order-summary li {
+  font-size: 1em;
+  margin-bottom: 0.4em;
+}
+
+.order-summary li strong {
+  font-size: 1.1em;
+}
+
+p.hide {
+  display: none !important;
+}
+
 :root {
   --font-body: Arial, Helvetica, sans-serif;
   --font-headline: Haettenschweiler, 'Arial Narrow Bold', sans-serif;
@@ -90,7 +362,7 @@ p {
   margin-top: -1.3em;
 }
 
-.logo--square>div {
+.logo--square > div {
   margin-top: -1.7em;
 }
 
@@ -342,7 +614,11 @@ button {
 }
 
 .cart-footer {
-  visibility: hidden;
+  /* Remove visibility:hidden so JS can toggle .hide */
+}
+
+.hide {
+  display: none !important;
 }
 
 footer {
