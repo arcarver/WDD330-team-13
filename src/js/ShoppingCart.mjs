@@ -43,19 +43,20 @@ export default class ShoppingCart {
                 "afterbegin",
                 `<li class="divider">Your cart is empty.</li>`
             );
-        }
-
-        // hides and unhides total:
-        else {
-            const unhide = document.getElementsByClassName('cart-footer')[0]
-            unhide.style.visibility = 'visible';
-            const prices = document.getElementsByClassName('cart-card__price')
+            // Hide the cart-footer if empty
+            const footer = document.querySelector('.cart-footer');
+            if (footer) footer.classList.add('hide');
+        } else {
+            // Show the cart-footer if there are items
+            const footer = document.querySelector('.cart-footer');
+            if (footer) footer.classList.remove('hide');
+            const prices = document.getElementsByClassName('cart-card__price');
             const total = Array.from(prices).reduce((accumulator, currentValue) => {
                 const value = parseFloat(currentValue.innerText.replace(/[^\d.]/g, '')) || 0;
                 return accumulator + value;
             }, 0);
-
-            document.getElementsByClassName('cart-total')[0].textContent = `This is the new total: $${total}`
+            const totalElem = document.querySelector('.cart-total');
+            if (totalElem) totalElem.textContent = `Total: $${total.toFixed(2)}`;
         }
     }
 

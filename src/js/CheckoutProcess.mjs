@@ -1,4 +1,25 @@
 import { getLocalStorage } from "./utils.mjs";
+import ExternalServices from "./ExternalServices.mjs";
+
+const services = new ExternalServices();
+
+function formDataToJSON(formElement) {
+    const formData = new FormData(formElement);
+    const convertedJSON = {};
+    formData.forEach((value, key) => {
+        convertedJSON[key] = value;
+    });
+    return convertedJSON;
+}
+
+function packageItems(items) {
+    return (items || []).map((item) => ({
+        id: item.Id || item.id || item.productId,
+        name: item.Name || item.name || item.title,
+        price: parseFloat(item.FinalPrice ?? item.price ?? 0),
+        quantity: parseInt(item.quantity ?? 1, 10) || 1
+    }));
+}
 
 export default class CheckoutProcess {
     constructor(key, outputSelector) {
@@ -14,6 +35,32 @@ export default class CheckoutProcess {
     init() {
         this.list = getLocalStorage(this.key) || [];
         this.calculateItemSubTotal();
+    }
+
+    async checkout(form) {
+        // Convert expiration from YYYY-MM to MM/YY if needed
+        const orderData = formDataToJSON(form);
+        if (orderData.expiration && orderData.expiration.includes('-')) {
+            const [year, month] = orderData.expiration.split('-');
+            orderData.expiration = `${month}/${year.slice(-2)}`;
+        }
+        if (!this.list || this.list.length === 0) {
+            return { error: true, message: "Cart is empty." };
+        }
+
+        this.calculateItemSubTotal();
+        this.calculateOrderTotal();
+
+        orderData.orderDate = new Date().toISOString();
+        orderData.orderTotal = this.orderTotal.toFixed(2);
+        orderData.tax = this.tax.toFixed(2);
+        orderData.shipping = this.shipping;
+        orderData.items = packageItems(this.list);
+
+        console.log('ORDER PAYLOAD TO SERVER:', orderData);
+
+        const response = await services.checkout(orderData);
+        return response;
     }
 
     calculateItemSubTotal() {
@@ -37,11 +84,11 @@ export default class CheckoutProcess {
 
     displayOrderTotals() {
         // Display tax, shipping, and total
-        const taxElem = document.querySelector(`${this.outputSelector} #summary-tax`);
+        const taxElem = document.querySelector(`${this.outputSelector} #tax`);
         if (taxElem) taxElem.textContent = `$${this.tax.toFixed(2)}`;
-        const shippingElem = document.querySelector(`${this.outputSelector} #summary-shipping`);
+        const shippingElem = document.querySelector(`${this.outputSelector} #shipping`);
         if (shippingElem) shippingElem.textContent = `$${this.shipping.toFixed(2)}`;
-        const totalElem = document.querySelector(`${this.outputSelector} #summary-total`);
+        const totalElem = document.querySelector(`${this.outputSelector} #orderTotal`);
         if (totalElem) totalElem.textContent = `$${this.orderTotal.toFixed(2)}`;
     }
 }
