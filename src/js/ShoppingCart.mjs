@@ -57,9 +57,6 @@ export default class ShoppingCart {
 
             document.getElementsByClassName('cart-total')[0].textContent = `This is the new total: $${total}`
         }
-
-
-
     }
 
     init() {

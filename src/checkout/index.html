@@ -1,26 +1,70 @@
 <!doctype html>
 
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+  <meta charset="UTF-8" />
 
-    <title>Sleep Outside | Checkout</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" href="/css/style.css" />
-    <script type="module" src="../js/checkout.js"></script>
-  </head>
+  <title>Sleep Outside | Checkout</title>
 
-  <body>
-    <header class="divider" id="main-header"></header>
+  <link rel="stylesheet" href="/css/style.css" />
+  <script type="module" src="../js/checkout.js"></script>
+</head>
 
-    <main class="divider">
-      <section class="products">
-        <h2>Review & Place your Order</h2>
-      </section>
-    </main>
+<body>
+  <header class="divider" id="main-header"></header>
 
-    <footer id="main-footer"></footer>
-  </body>
+  <main class="divider">
+    <section class="products">
+      <h2>Review & Place your Order</h2>
+      <div class="checkout-container">
+        <form id="checkout-form" novalidate>
+          <fieldset>
+            <legend>Customer Name</legend>
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" name="firstName" required />
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" name="lastName" required />
+          </fieldset>
+          <fieldset>
+            <legend>Address</legend>
+            <label for="street">Street Address</label>
+            <input type="text" id="street" name="street" required />
+            <label for="city">City</label>
+            <input type="text" id="city" name="city" required />
+            <label for="state">State</label>
+            <input type="text" id="state" name="state" required />
+            <label for="zip">Zip Code</label>
+            <input type="text" id="zip" name="zip" required pattern="\d{5}" />
+          </fieldset>
+          <fieldset>
+            <legend>Payment</legend>
+            <label for="ccnum">Credit Card Number</label>
+            <input type="text" id="ccnum" name="ccnum" required pattern="\d{13,16}" maxlength="16" />
+            <label for="exp">Expiration Date</label>
+            <input type="month" id="exp" name="exp" required />
+            <label for="cvv">Security Code</label>
+            <input type="text" id="cvv" name="cvv" required pattern="\d{3,4}" maxlength="4" />
+          </fieldset>
+          <button type="submit" class="button">Checkout</button>
+          <div id="form-error" style="color:red; display:none;">Please fill out all fields correctly.</div>
+        </form>
+        <aside class="order-summary">
+          <h3>Order Summary</h3>
+          <ul>
+            <li>Subtotal: <span id="summary-subtotal">$0.00</span></li>
+            <li>Tax: <span id="summary-tax">$0.00</span></li>
+            <li>Shipping Estimate: <span id="summary-shipping">$0.00</span></li>
+            <li><strong>Order Total: <span id="summary-total">$0.00</span></strong></li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer id="main-footer"></footer>
+</body>
+
 </html>
