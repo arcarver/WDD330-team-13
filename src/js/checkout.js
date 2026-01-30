@@ -1,4 +1,4 @@
-import { loadHeaderFooter, updateCartCount } from './utils.mjs';
+import { loadHeaderFooter, updateCartCount, alertMessage } from './utils.mjs';
 import CheckoutProcess from './CheckoutProcess.mjs';
 
 loadHeaderFooter();
@@ -20,29 +20,38 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         document.getElementById('form-error').style.display = 'none';
       }
-      // Call checkout and log response
+      // Call checkout and handle response
       const checkoutProcess = new CheckoutProcess('so-cart', '.order-summary');
       checkoutProcess.init();
       const response = await checkoutProcess.checkout(form);
-      // Show user feedback
-      let msg = '';
       if (response && !response.error) {
-        msg = 'Order submitted successfully!';
+        // Clear cart and redirect to success page
+        localStorage.removeItem('so-cart');
+        window.location.href = './success.html';
       } else {
-        msg =
-          'Order failed: ' +
-          (response && response.message ? response.message : 'Unknown error');
+        // Show error feedback as popup alert
+        let msg = 'Order failed: ';
+        if (response && response.message) {
+          if (
+            typeof response.message === 'object' &&
+            response.message !== null
+          ) {
+            // Format each field and message for user-friendly display
+            const details = Object.entries(response.message)
+              .map(
+                ([field, error]) =>
+                  `${field.replace(/([A-Z])/g, ' $1')}: ${error}`,
+              )
+              .join('<br>');
+            msg += `<br>${details}`;
+          } else {
+            msg += response.message;
+          }
+        } else {
+          msg += 'Unknown error';
+        }
+        alertMessage(msg);
       }
-      let feedback = document.getElementById('checkout-feedback');
-      if (!feedback) {
-        feedback = document.createElement('div');
-        feedback.id = 'checkout-feedback';
-        feedback.style.margin = '1em 0';
-        feedback.style.fontWeight = 'bold';
-        form.appendChild(feedback);
-      }
-      feedback.textContent = msg;
-      feedback.style.color = response && !response.error ? 'green' : 'red';
     });
   }
 

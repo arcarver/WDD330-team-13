@@ -38,29 +38,34 @@ export default class CheckoutProcess {
     }
 
     async checkout(form) {
-        // Convert expiration from YYYY-MM to MM/YY if needed
-        const orderData = formDataToJSON(form);
-        if (orderData.expiration && orderData.expiration.includes('-')) {
-            const [year, month] = orderData.expiration.split('-');
-            orderData.expiration = `${month}/${year.slice(-2)}`;
+        try {
+            // Convert expiration from YYYY-MM to MM/YY if needed
+            const orderData = formDataToJSON(form);
+            if (orderData.expiration && orderData.expiration.includes('-')) {
+                const [year, month] = orderData.expiration.split('-');
+                orderData.expiration = `${month}/${year.slice(-2)}`;
+            }
+            if (!this.list || this.list.length === 0) {
+                return { error: true, message: "Cart is empty." };
+            }
+
+            this.calculateItemSubTotal();
+            this.calculateOrderTotal();
+
+            orderData.orderDate = new Date().toISOString();
+            orderData.orderTotal = this.orderTotal.toFixed(2);
+            orderData.tax = this.tax.toFixed(2);
+            orderData.shipping = this.shipping;
+            orderData.items = packageItems(this.list);
+
+            console.log('ORDER PAYLOAD TO SERVER:', orderData);
+
+            const response = await services.checkout(orderData);
+            return response;
+        } catch (err) {
+            // Surface error details for UI
+            return { error: true, message: err.message || "Checkout failed." };
         }
-        if (!this.list || this.list.length === 0) {
-            return { error: true, message: "Cart is empty." };
-        }
-
-        this.calculateItemSubTotal();
-        this.calculateOrderTotal();
-
-        orderData.orderDate = new Date().toISOString();
-        orderData.orderTotal = this.orderTotal.toFixed(2);
-        orderData.tax = this.tax.toFixed(2);
-        orderData.shipping = this.shipping;
-        orderData.items = packageItems(this.list);
-
-        console.log('ORDER PAYLOAD TO SERVER:', orderData);
-
-        const response = await services.checkout(orderData);
-        return response;
     }
 
     calculateItemSubTotal() {
