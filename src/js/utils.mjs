@@ -1,3 +1,20 @@
+// Custom alert message utility
+export function alertMessage(message, scroll = true) {
+  const alert = document.createElement('div');
+  alert.classList.add('alert');
+  alert.innerHTML = `
+    <span class="alert-message">${message}</span>
+    <button class="alert-close" aria-label="Close">&times;</button>
+  `;
+  const main = document.querySelector('main');
+  if (main) {
+    main.prepend(alert);
+    if (scroll) window.scrollTo(0, 0);
+    alert.querySelector('.alert-close').addEventListener('click', function (e) {
+      alert.remove();
+    });
+  }
+}
 // wrapper for querySelector...returns matching element
 export function qs(selector, parent = document) {
   return parent.querySelector(selector);
