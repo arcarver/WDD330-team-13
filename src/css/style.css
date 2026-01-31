@@ -13,90 +13,49 @@
   vertical-align: middle;
 }
 
-
-.product-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 2em 1.5em;
-  padding: 0;
-  margin: 0 auto;
-  width: 100%;
-  max-width: 1200px;
-}
-
+.product-list,
 .cart-list {
   display: flex;
   flex-direction: column;
-  gap: 1em;
+  gap: 2.2em;
   padding: 0;
   margin: 0;
-  width: 100%;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .cart-card {
-  display: grid;
-  grid-template-columns: 90px 2.5fr 1.2fr 2.2fr 1.2fr;
-  align-items: center;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5em;
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  padding: 0.7em 1em;
+  padding: 1.2em 1.5em 1.2em 1.5em;
   position: relative;
-  min-height: 70px;
-  width: 100%;
-  gap: 0.5em;
-}
-
-/* Cart controls (quantity, update, remove) */
-.cart-card__controls {
-  display: flex;
-  align-items: center;
-  gap: 0.7em;
-  justify-content: flex-start;
+  min-height: 120px;
 }
 
 .cart-card__image img {
-  max-width: 90px;
-  max-height: 70px;
+  max-width: 120px;
+  max-height: 90px;
   border-radius: 6px;
   object-fit: contain;
 }
 
 .cart-card__remove {
-  background: #e53935;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 0.3em 0.9em;
-  font-size: 1.3em;
-  cursor: pointer;
-  height: 2em;
-  min-width: 2em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s;
-  box-shadow: none;
-  margin: 0;
-}
-
-.cart-card__remove:hover {
-  background: #b71c1c;
+  position: absolute;
+  top: 0.7em;
+  right: 0.7em;
 }
 
 .cart-card__price,
 .cart-card__quantity,
 .cart-card__color {
-  margin: 0.1em 0 0.1em 0;
+  margin: 0.2em 0 0.2em 0;
 }
 
 .cart-card__price {
   font-weight: 500;
   color: #333;
-  text-align: right;
 }
 
 .cart-card__quantity {
@@ -133,6 +92,23 @@
 .breadcrumbs .crumb-sep {
   margin: 0 0.4em;
   color: #bfa76a;
+}
+
+.cart-card__remove {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  font-size: 1.5em;
+  color: #a94442;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.cart-card {
+  position: relative;
+  padding-top: 2em;
 }
 
 .alert {
@@ -432,14 +408,11 @@ p.hide {
 :root {
   --font-body: Arial, Helvetica, sans-serif;
   --font-headline: Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  /* colors */
   --primary-color: #f0a868;
   --secondary-color: #525b0f;
   --tertiary-color: #8a470c;
   --light-grey: #d0d0d0;
   --dark-grey: #303030;
-
-  /* sizes */
   --font-base: 18px;
   --small-font: 0.8em;
   --large-font: 1.2em;
@@ -521,11 +494,10 @@ p {
   margin-top: -1.3em;
 }
 
-.logo--square>div {
+.logo--square > div {
   margin-top: -1.7em;
 }
 
-/* utility classes */
 .highlight {
   color: var(--tertiary-color);
 }
@@ -545,9 +517,6 @@ button {
   border-bottom: 2px solid var(--primary-color);
 }
 
-/* End utility classes */
-
-/* Cart icon styles */
 .cart {
   padding-top: 1em;
   position: relative;
@@ -584,8 +553,6 @@ button {
   display: none;
 }
 
-/* End cart icon styles */
-
 .mission {
   position: absolute;
   top: 1rem;
@@ -621,7 +588,6 @@ button {
   color: var(--dark-grey);
 }
 
-/* Styles for product lists */
 .product-card {
   flex: 1 1 45%;
   margin: 0.25em;
@@ -678,8 +644,6 @@ button {
   font-size: 1em;
 }
 
-/* End product list card */
-
 .product-detail {
   padding: 1em;
   max-width: 500px;
@@ -718,12 +682,10 @@ button {
   margin: 0;
 }
 
-/* Start cart list card styles */
 .cart-card {
   display: grid;
   grid-template-columns: 25% auto 15%;
   font-size: var(--small-font);
-  /* max-height: 120px; */
   align-items: center;
 }
 
@@ -753,14 +715,13 @@ button {
   margin-bottom: 7px;
   width: 30px;
 }
-
 #update_button {
   padding: 5px;
   margin-top: 3px;
   background-color: var(--secondary-color);
   color: white;
   margin: auto;
-  border: 0;
+  border: 0; 
   cursor: pointer;
 }
 
@@ -785,8 +746,8 @@ button {
   }
 }
 
-.cart-footer {
-  visibility: hidden;
+.hide {
+  display: none !important;
 }
 
 footer {
@@ -794,7 +755,6 @@ footer {
   padding: 1em;
 }
 
-/* Category grid styling */
 .categories {
   padding: 2rem 1rem;
   background-color: #f8f9fa;
@@ -868,7 +828,6 @@ footer {
   }
 }
 
-/* Alert styling */
 .alert-list {
   margin-bottom: 1rem;
 }

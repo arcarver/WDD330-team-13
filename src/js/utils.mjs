@@ -1,19 +1,32 @@
-// wrapper for querySelector...returns matching element
+export function alertMessage(message, scroll = true) {
+  const alert = document.createElement('div');
+  alert.classList.add('alert');
+  alert.innerHTML = `
+    <span class="alert-message">${message}</span>
+    <button class="alert-close" aria-label="Close">&times;</button>
+  `;
+  const main = document.querySelector('main');
+  if (main) {
+    main.prepend(alert);
+    if (scroll) window.scrollTo(0, 0);
+    alert.querySelector('.alert-close').addEventListener('click', function (e) {
+      alert.remove();
+    });
+  }
+}
+
 export function qs(selector, parent = document) {
   return parent.querySelector(selector);
 }
-// or a more concise version if you are into that sort of thing:
-// export const qs = (selector, parent = document) => parent.querySelector(selector);
 
-// retrieve data from localstorage
 export function getLocalStorage(key) {
   return JSON.parse(localStorage.getItem(key));
 }
-// save data to local storage
+
 export function setLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
-// set a listener for both touchend and click
+
 export function setClick(selector, callback) {
   qs(selector).addEventListener("touchend", (event) => {
     event.preventDefault();
@@ -29,7 +42,7 @@ export function getParam(param) {
 
 export function renderListWithTemplate(templateFn, parentElement, list, position = "afterbegin", clear = false) {
   const htmlStrings = list.map(templateFn);
-  // if clear is true we need to clear out the contents of the parent.
+
   if (clear) {
     parentElement.innerHTML = "";
   }
@@ -59,7 +72,6 @@ export async function loadHeaderFooter() {
   if (headerElement) renderWithTemplate(headerTemplate, headerElement);
   if (footerElement) renderWithTemplate(footerTemplate, footerElement);
 
-  // Initialize cart count display
   updateCartCount();
 }
 
@@ -71,7 +83,6 @@ export function updateCartCount() {
     const itemCount = cartItems.length;
     cartCountElement.textContent = itemCount;
 
-    // Hide the count if cart is empty
     if (itemCount === 0) {
       cartCountElement.classList.add("hidden");
     } else {
