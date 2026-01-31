@@ -10,9 +10,28 @@
 
   <body>
     <header class="divider" id="main-header"></header>
+    <nav id="breadcrumbs" class="breadcrumbs"></nav>
     <main class="divider">
       <section class="products">
-        <h2>Top Products</h2>
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          "
+        >
+          <h2>Top Products</h2>
+          <label for="sort-select" style="font-size: 1em">
+            Sort by:
+            <select id="sort-select">
+              <option value="default">Default</option>
+              <option value="name-asc">Name (A-Z)</option>
+              <option value="name-desc">Name (Z-A)</option>
+              <option value="price-asc">Price (Low to High)</option>
+              <option value="price-desc">Price (High to Low)</option>
+            </select>
+          </label>
+        </div>
         <ul class="product-list"></ul>
       </section>
     </main>

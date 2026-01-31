@@ -42,7 +42,6 @@ function productDetailsTemplate(product) {
     productImage.src = product.Images.PrimaryLarge;
     productImage.alt = product.NameWithoutBrand;
 
-    // Handle discount pricing
     const priceElement = document.getElementById('productPrice');
     const isDiscounted = product.SuggestedRetailPrice && product.FinalPrice < product.SuggestedRetailPrice;
 
