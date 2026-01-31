@@ -22,7 +22,9 @@ export default class ShoppingCart {
         <h2 class="card__name">${item.Name}</h2>
       </a>
       <p class="cart-card__color">${item.Colors?.[0]?.ColorName ?? ""}</p>
-      <p class="cart-card__quantity">qty: 1</p>
+      <input type="int" class="cart-card__quantity" value="1">
+      <label class="cart-card__quantity
+      <button class=cart-quantity__update" id="update_button" type="button">Update</button>
       <p class="cart-card__price">$${item.FinalPrice}</p>
     </li>`;
     }
