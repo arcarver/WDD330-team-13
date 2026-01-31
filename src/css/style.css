@@ -711,6 +711,18 @@ button {
 .cart-card__quantity {
   grid-row: 1;
   grid-column: 3;
+  padding: 5px;
+  margin-bottom: 7px;
+  width: 30px;
+}
+#update_button {
+  padding: 5px;
+  margin-top: 3px;
+  background-color: var(--secondary-color);
+  color: white;
+  margin: auto;
+  border: 0; 
+  cursor: pointer;
 }
 
 .cart-card__price {

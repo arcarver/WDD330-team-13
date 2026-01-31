@@ -14,16 +14,29 @@ export default class ExternalServices {
     // No longer need category or path in constructor
   }
 
+  getFullUrlForCategory(category) {
+    if (!!baseURL) {
+      return `${baseURL}products/search/${category}`;
+    } else {
+      return `/json/${category}.json`;
+    }
+  }
+
   async getData(category) {
-    const response = await fetch(`${baseURL}products/search/${category}`);
+    const response = await fetch(this.getFullUrlForCategory(category));
     const data = await convertToJson(response);
     return data.Result;
   }
 
   async findProductById(id) {
-    const response = await fetch(`${baseURL}product/${id}`);
-    const data = await convertToJson(response);
-    return data.Result;
+    if (!!baseURL) {
+      const response = await fetch(`${baseURL}product/${id}`);
+      const data = await convertToJson(response);
+      return data.Result;
+    } else {
+      const bags = await this.getData('sleeping-bags');
+      return bags.find((bag) => { return bag.Id == id });
+    }
   }
 
   async checkout(payload) {
