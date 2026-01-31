@@ -29,9 +29,14 @@ export default class ExternalServices {
   }
 
   async findProductById(id) {
-    const response = await fetch(`${baseURL}product/${id}`);
-    const data = await convertToJson(response);
-    return data.Result;
+    if (!!baseURL) {
+      const response = await fetch(`${baseURL}product/${id}`);
+      const data = await convertToJson(response);
+      return data.Result;
+    } else {
+      const bags = await this.getData('sleeping-bags');
+      return bags.find((bag) => { return bag.Id == id });
+    }
   }
 
   async checkout(payload) {
