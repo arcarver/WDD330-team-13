@@ -119,9 +119,10 @@ export default class ShoppingCart {
     }
 
     removeItem(id) {
-        console.log('Cart items before removal:', this.cartItems.map(item => item.Id || item.id || item.productId));
-        const items = this.cartItems.filter(item => String(item.Id || item.id || item.productId) !== String(id));
-        localStorage.setItem(this.storageKey, JSON.stringify(items));
+        // Remove ALL instances of the item from the raw cart array in localStorage
+        const cart = getLocalStorage(this.storageKey) ?? [];
+        const filtered = cart.filter(item => String(item.Id || item.id || item.productId) !== String(id));
+        setLocalStorage(this.storageKey, filtered);
         this.render();
     }
     init() {
