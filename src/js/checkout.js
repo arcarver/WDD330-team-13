@@ -3,12 +3,10 @@ import CheckoutProcess from './CheckoutProcess.mjs';
 
 loadHeaderFooter();
 
-// Update cart count after header loads
 setTimeout(() => {
   updateCartCount();
 }, 100);
 
-// Form validation and order summary using CheckoutProcess
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('checkout-form');
   if (form) {
@@ -20,23 +18,20 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         document.getElementById('form-error').style.display = 'none';
       }
-      // Call checkout and handle response
+
       const checkoutProcess = new CheckoutProcess('so-cart', '.order-summary');
       checkoutProcess.init();
       const response = await checkoutProcess.checkout(form);
       if (response && !response.error) {
-        // Clear cart and redirect to success page
         localStorage.removeItem('so-cart');
         window.location.href = './success.html';
       } else {
-        // Show error feedback as popup alert
         let msg = 'Order failed: ';
         if (response && response.message) {
           if (
             typeof response.message === 'object' &&
             response.message !== null
           ) {
-            // Format each field and message for user-friendly display
             const details = Object.entries(response.message)
               .map(
                 ([field, error]) =>
@@ -55,11 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Use CheckoutProcess for order summary
   const checkout = new CheckoutProcess('so-cart', '.order-summary');
   checkout.init();
 
-  // Calculate totals after zip code is filled
   const zipInput = document.getElementById('zip');
   if (zipInput) {
     zipInput.addEventListener('blur', () => {

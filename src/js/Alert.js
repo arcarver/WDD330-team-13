@@ -12,8 +12,7 @@ export default class Alert {
       const alerts = await response.json();
       return alerts;
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log('No alerts found or error loading alerts:', error.message);
+      // No alerts found or error loading alerts
       return [];
     }
   }
@@ -38,17 +37,14 @@ export default class Alert {
     const alerts = await this.loadAlerts();
 
     if (alerts.length > 0) {
-      // Create the alert-list section
       const alertSection = document.createElement('section');
       alertSection.className = 'alert-list';
 
-      // Loop through alerts and create alert elements
       alerts.forEach((alert) => {
         const alertElement = this.createAlertElement(alert);
         alertSection.appendChild(alertElement);
       });
 
-      // Prepend to the main element
       const mainElement = document.querySelector('main');
       if (mainElement) {
         mainElement.insertBefore(alertSection, mainElement.firstChild);

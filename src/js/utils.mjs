@@ -1,4 +1,3 @@
-// Custom alert message utility
 export function alertMessage(message, scroll = true) {
   const alert = document.createElement('div');
   alert.classList.add('alert');
@@ -15,22 +14,19 @@ export function alertMessage(message, scroll = true) {
     });
   }
 }
-// wrapper for querySelector...returns matching element
+
 export function qs(selector, parent = document) {
   return parent.querySelector(selector);
 }
-// or a more concise version if you are into that sort of thing:
-// export const qs = (selector, parent = document) => parent.querySelector(selector);
 
-// retrieve data from localstorage
 export function getLocalStorage(key) {
   return JSON.parse(localStorage.getItem(key));
 }
-// save data to local storage
+
 export function setLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
-// set a listener for both touchend and click
+
 export function setClick(selector, callback) {
   qs(selector).addEventListener("touchend", (event) => {
     event.preventDefault();
@@ -46,7 +42,7 @@ export function getParam(param) {
 
 export function renderListWithTemplate(templateFn, parentElement, list, position = "afterbegin", clear = false) {
   const htmlStrings = list.map(templateFn);
-  // if clear is true we need to clear out the contents of the parent.
+
   if (clear) {
     parentElement.innerHTML = "";
   }
@@ -76,7 +72,6 @@ export async function loadHeaderFooter() {
   if (headerElement) renderWithTemplate(headerTemplate, headerElement);
   if (footerElement) renderWithTemplate(footerTemplate, footerElement);
 
-  // Initialize cart count display
   updateCartCount();
 }
 
@@ -88,7 +83,6 @@ export function updateCartCount() {
     const itemCount = cartItems.length;
     cartCountElement.textContent = itemCount;
 
-    // Hide the count if cart is empty
     if (itemCount === 0) {
       cartCountElement.classList.add("hidden");
     } else {
