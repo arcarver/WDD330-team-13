@@ -1,10 +1,10 @@
 import { renderListWithTemplate } from './utils.mjs';
 
 function productCardTemplate(product) {
-    const isDiscounted = product.SuggestedRetailPrice && product.FinalPrice < product.SuggestedRetailPrice;
-    const discountPercent = isDiscounted ? Math.round(((product.SuggestedRetailPrice - product.FinalPrice) / product.SuggestedRetailPrice) * 100) : 0;
+  const isDiscounted = product.SuggestedRetailPrice && product.FinalPrice < product.SuggestedRetailPrice;
+  const discountPercent = isDiscounted ? Math.round(((product.SuggestedRetailPrice - product.FinalPrice) / product.SuggestedRetailPrice) * 100) : 0;
 
-    return `<li class="product-card">
+  return `<li class="product-card">
     <a href="../product_pages/?product=${product.Id}">
       ${isDiscounted ? `<div class="discount-badge">${discountPercent}% OFF</div>` : ''}
       <img src="${product.Images.PrimaryMedium}" alt="Image of ${product.Name}">
@@ -19,22 +19,22 @@ function productCardTemplate(product) {
 }
 
 export default class ProductList {
-    constructor(category, dataSource, listElement) {
-        // You passed in this information to make the class as reusable as possible.
-        // Being able to define these things when you use the class will make it very flexible
-        this.category = category;
-        this.dataSource = dataSource;
-        this.listElement = listElement;
-    }
+  constructor(category, dataSource, listElement) {
+    // You passed in this information to make the class as reusable as possible.
+    // Being able to define these things when you use the class will make it very flexible
+    this.category = category;
+    this.dataSource = dataSource;
+    this.listElement = listElement;
+  }
 
-    async init() {
-        // the dataSource will return a Promise...so you can use await to resolve it.
-        const list = await this.dataSource.getData(this.category);
-        // render the list of products
-        this.renderList(list);
-    }
+  async init() {
+    // the dataSource will return a Promise...so you can use await to resolve it.
+    const list = await this.dataSource.getData(this.category);
+    // render the list of products
+    this.renderList(list);
+  }
 
-    renderList(list) {
-        renderListWithTemplate(productCardTemplate, this.listElement, list);
-    }
+  renderList(list) {
+    renderListWithTemplate(productCardTemplate, this.listElement, list, "afterbegin", true);
+  }
 }
