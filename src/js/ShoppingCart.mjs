@@ -1,4 +1,4 @@
-import { getLocalStorage, renderListWithTemplate } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage, renderListWithTemplate, updateCartCount } from "./utils.mjs";
 
 export default class ShoppingCart {
     constructor(storageKey, parentElement) {
@@ -8,26 +8,42 @@ export default class ShoppingCart {
 
     get cartItems() {
         // if nothing in localStorage, return empty array
-        return getLocalStorage(this.storageKey) ?? [];
+        const items = getLocalStorage(this.storageKey) ?? [];
+        let countedItems = [];
+        items.forEach((item) => {
+            let existingItem = countedItems.find((countedItem) => {
+                return countedItem.Id === item.Id;
+            });
+            if (existingItem) {
+                existingItem.Quantity += 1;
+            } else {
+                item.Quantity = 1;
+                countedItems.push(item);
+            }
+        });
+
+        return countedItems;
     }
 
     cartItemTemplate(item) {
         // Handle both API response format and local JSON format
         const imageUrl = item.Images?.PrimaryMedium || item.Image || '';
-        return `<li class="cart-card divider">
-      <a href="#" class="cart-card__image">
-        <img src="${imageUrl}" alt="${item.Name}" />
-      </a>
-      <a href="#">
-        <h2 class="card__name">${item.Name}</h2>
-      </a>
-      <p class="cart-card__color">${item.Colors?.[0]?.ColorName ?? ""}</p>
-      <div>
-      <input type="int" class="cart-card__quantity" value="1">
-      <label class="cart-card__quantity>
-      <button class=cart-quantity__update" id="update_button" type="button">Update</button></div>
-      <p class="cart-card__price">$${item.FinalPrice}</p>
-    </li>`;
+        const quantity = item.Quantity;
+        return `<li class="cart-card divider" id="${item.Id}">
+            <a href="#" class="cart-card__image">
+                <img src="${imageUrl}" alt="${item.Name}" />
+            </a>
+            <a href="#">
+                <h2 class="card__name">${item.Name}</h2>
+            </a>
+            <p class="cart-card__color">${item.Colors?.[0]?.ColorName ?? ""}</p>
+            <div>
+                <input type="int" id="item_count" class="cart-card__quantity" value="${quantity}">
+                <label class="cart-card__quantity>
+                <button class=cart-quantity__update" id="update_button" type="button">Update</button>
+            </div>
+            <p class="cart-card__price">$${item.FinalPrice * quantity}</p>
+        </li>`;
     }
 
     render() {
@@ -39,6 +55,39 @@ export default class ShoppingCart {
             "afterbegin",
             true
         );
+
+        const buttons = document.querySelectorAll('#update_button');
+        buttons.forEach((button) => {
+            button.addEventListener('click', () => {
+                const countedCart = this.cartItems;
+                const id = button.parentElement.parentElement.id;
+                const newQuantity = Number(button.parentElement.querySelector('#item_count').value);
+                const existingElement = countedCart.find((item) => { return item.Id === id });
+                let existingQuantity = existingElement.Quantity;
+                existingElement.Quantity = undefined;
+                if (existingQuantity < newQuantity) {
+                    const cart = getLocalStorage(this.storageKey) ?? [];
+                    while (existingQuantity < newQuantity) {
+                        cart.push(existingElement);
+                        existingQuantity++;
+                    }
+                    setLocalStorage(this.storageKey, cart);
+                    this.render();
+                    updateCartCount();
+                } else if (existingQuantity > newQuantity) {
+                    const cart = getLocalStorage(this.storageKey) ?? [];
+                    while (existingQuantity > newQuantity) {
+                        const lastIndex = cart.findLastIndex((item) => { return item.Id === id });
+                        cart.splice(lastIndex, 1);
+                        existingQuantity--;
+                    }
+                    setLocalStorage(this.storageKey, cart);
+                    this.render();
+                    updateCartCount();
+                }
+            });
+
+        });
 
         // Optional UX: show message if cart empty
         if (this.cartItems.length === 0) {
