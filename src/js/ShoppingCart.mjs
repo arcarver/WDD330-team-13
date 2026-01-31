@@ -14,17 +14,22 @@ export default class ShoppingCart {
     cartItemTemplate(item) {
         // Handle both API response format and local JSON format
         const imageUrl = item.Images?.PrimaryMedium || item.Image || '';
-        return `<li class="cart-card divider">
-      <a href="#" class="cart-card__image">
-        <img src="${imageUrl}" alt="${item.Name}" />
-      </a>
-      <a href="#">
-        <h2 class="card__name">${item.Name}</h2>
-      </a>
-      <p class="cart-card__color">${item.Colors?.[0]?.ColorName ?? ""}</p>
-      <p class="cart-card__quantity">qty: 1</p>
-      <p class="cart-card__price">$${item.FinalPrice}</p>
-    </li>`;
+        const quantity = item.Quantity;
+        return `<li class="cart-card divider" id="${item.Id}">
+            <a href="#" class="cart-card__image">
+                <img src="${imageUrl}" alt="${item.Name}" />
+            </a>
+            <a href="#">
+                <h2 class="card__name">${item.Name}</h2>
+            </a>
+            <p class="cart-card__color">${item.Colors?.[0]?.ColorName ?? ""}</p>
+            <div class="cart-card__controls">
+                <input type="int" id="item_count" class="cart-card__quantity" value="${quantity}" style="width: 2.5em; text-align: center;">
+                <button class="cart-quantity__update" id="update_button" type="button" style="height: 2em;">Update</button>
+                <button class="cart-card__remove" id="remove_button_${item.Id}" type="button" title="Remove from cart">&times;</button>
+            </div>
+            <p class="cart-card__price">$${item.FinalPrice * quantity}</p>
+        </li>`;
     }
 
     render() {
@@ -36,6 +41,49 @@ export default class ShoppingCart {
             "afterbegin",
             true
         );
+
+        // Update quantity buttons
+        const buttons = document.querySelectorAll('#update_button');
+        buttons.forEach((button) => {
+            button.addEventListener('click', () => {
+                const countedCart = this.cartItems;
+                const id = button.parentElement.parentElement.id;
+                const newQuantity = Number(button.parentElement.querySelector('#item_count').value);
+                const existingElement = countedCart.find((item) => { return item.Id === id });
+                let existingQuantity = existingElement.Quantity;
+                existingElement.Quantity = undefined;
+                if (existingQuantity < newQuantity) {
+                    const cart = getLocalStorage(this.storageKey) ?? [];
+                    while (existingQuantity < newQuantity) {
+                        cart.push(existingElement);
+                        existingQuantity++;
+                    }
+                    setLocalStorage(this.storageKey, cart);
+                    this.render();
+                    updateCartCount();
+                } else if (existingQuantity > newQuantity) {
+                    const cart = getLocalStorage(this.storageKey) ?? [];
+                    while (existingQuantity > newQuantity) {
+                        const lastIndex = cart.findLastIndex((item) => { return item.Id === id });
+                        cart.splice(lastIndex, 1);
+                        existingQuantity--;
+                    }
+                    setLocalStorage(this.storageKey, cart);
+                    this.render();
+                    updateCartCount();
+                }
+            });
+        });
+
+        // Remove buttons (attach like update button)
+        const removeButtons = document.querySelectorAll('.cart-card__remove');
+        removeButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                const id = button.parentElement.parentElement.id;
+                this.removeItem(id);
+                updateCartCount();
+            });
+        });
 
         // Optional UX: show message if cart empty
         if (this.cartItems.length === 0) {
