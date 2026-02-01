@@ -1,14 +1,13 @@
 const baseURL = import.meta.env.VITE_SERVER_URL;
 
 async function convertToJson(res) {
-  const jsonResponse = await res.json();
+  const data = await res.json();
   if (res.ok) {
-    return jsonResponse;
+    return data;
   } else {
-    throw { name: 'servicesError', message: jsonResponse };
+    throw { name: 'servicesError', message: data };
   }
 }
-
 export default class ExternalServices {
   constructor() {
     // No longer need category or path in constructor
@@ -45,10 +44,23 @@ export default class ExternalServices {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(payload)
-    };
+      body: JSON.stringify(payload),
+    }
+      try {} catch(err) {
+        try { }
+        
+        document.querySelector('#chekcoutSubmit')
+          .addEventListener('click', (e) => {
+            e.preventDefault();
+            const myForm = document.forms[0];
+            const chk_status = myForm.checkValidity();
+            myForm.reportValitity();
+            if (chk_status)
+             
+            myCheckout.checkout();
+        })
+      };
 
-    const response = await fetch(`${baseURL}checkout`, options);
-    return await convertToJson(response);
+    return await fetch (`${baseURL}checkout`, options).then(convertToJson);
   }
 }

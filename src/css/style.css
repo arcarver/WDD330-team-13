@@ -650,9 +650,9 @@ button {
   }
 }
 
-.cart-footer {
+/* .cart-footer { */
   /* Remove visibility:hidden so JS can toggle .hide */
-}
+/* }  */
 
 .hide {
   display: none !important;

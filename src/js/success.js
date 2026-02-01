@@ -9,3 +9,7 @@ loadHeaderFooter();
 setTimeout(() => {
     window.location.href = '../index.html';
 }, 3000);
+
+clearCart() {
+    localStorage.clear();
+}
