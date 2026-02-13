@@ -1,0 +1,67 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #74ebd5, #acb6e5);
+}
+
+header {
+  text-align: center;
+  padding: 20px;
+}
+
+input, button {
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+}
+
+button {
+  background: #ff7b54;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+main {
+  padding: 20px;
+}
+
+#results, #favoriteList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+  gap: 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 15px;
+  padding: 10px;
+  box-shadow: 0 5px 10px rgba(0,0,0,.2);
+  animation: fadeIn 1s ease;
+  transition: transform 0.4s;
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.03);
+}
+
+.card-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: transform 0.5s;
+}
+
+.card-img:hover {
+  transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+  from {opacity:0;}
+  to {opacity:1;}
+}

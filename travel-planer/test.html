@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Test Amadeus</title>
+</head>
+<body>
+  <h2>Testing Amadeus API</h2>
+  <button onclick="testToken()">Test Token</button>
+
+  <pre id="output"></pre>
+
+<script>
+const API_KEY = "TU_API_KEY";
+const API_SECRET = "TU_API_SECRET";
+
+async function testToken() {
+  const url = "https://test.api.amadeus.com/v1/security/oauth2/token";
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: `grant_type=client_credentials&client_id=${API_KEY}&client_secret=${API_SECRET}`
+  });
+
+  const data = await response.json();
+  document.getElementById("output").textContent = JSON.stringify(data, null, 2);
+}
+</script>
+</body>
+</html>
